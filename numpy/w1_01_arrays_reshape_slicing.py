@@ -155,21 +155,31 @@ print(arr_int.dtype)   # float64
 # AI models need float not int
 # Saves memory with right dtype
 
-## Now Your Tasks
+# Now Your Tasks
 
-import numpy as np
+# import numpy as np
 
 # Task 1 - Create these arrays:
 # 1. 1D array of numbers 1-20
+arr=np.arange(0,21,1)
+print(arr)
 # 2. 2D array of zeros (4x5)
+print(np.zeros((4,5)))
 # 3. Array of 10 evenly spaced numbers between 0 and 100
+print(np.linspace(0,100,10).astype(int))
 # 4. arange from 0 to 50 step 5
+print(np.arange(0,51,5))
 
 # Task 2 - Reshape:
 # 1. Create array 1-24
+arr=np.arange(1,25)
+print(arr)
 # 2. Reshape to 4x6
+print(np.reshape(arr,[4,6]))
 # 3. Reshape to 2x12
+print(np.reshape(arr,[2,12]))
 # 4. Flatten back to 1D
+print(np.reshape(arr,[4,6]).flatten())
 
 # Task 3 - Slicing:
 marks = np.array([
@@ -178,9 +188,12 @@ marks = np.array([
     [23, 56, 88, 74],
     [95, 61, 43, 38]
 ])
+
+
 # 1. Get first row
 # 2. Get last column
 # 3. Get first 2 rows and first 2 columns
 # 4. Get marks of student 3 (row 2)
 # 5. Reverse the entire array
 # 6. Get every other row
+
