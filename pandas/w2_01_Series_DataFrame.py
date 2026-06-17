@@ -1,182 +1,240 @@
-'''What is Pandas?
-Built on top of NumPy, designed for working with tables (like Excel but in code).'''
+# '''What is Pandas?
+# Built on top of NumPy, designed for working with tables (like Excel but in code).'''
 
-# Series  One Column of Data
+# # Series  One Column of Data
 import pandas as pd
 
-# #Series is like a single column
-# marks = pd.Series([45, 78, 90, 55, 67])
-# print("series:one column>>\n",marks)
-# # Output:
-# # 0    45
-# # 1    78
-# # 2    90
-# # 3    55
-# # 4    67
-# # dtype: int64
-# # Notice — it has index (0,1,2,3,4) automatically.
+#Series is like a single column
+marks = pd.Series([45, 78, 90, 55, 67])
+print("series:one column>>\n",marks)
+# Output:
+# 0    45
+# 1    78
+# 2    90
+# 3    55
+# 4    67
+# dtype: int64
+# Notice — it has index (0,1,2,3,4) automatically.
 s=pd.Series([12,34,56,76])
 print(s)
 print(s.values)
 print(s.index)
 # indexing concept>>>>=start,stop,step
+'''series from dict'''
+data = {'Math': 45, 'English': 67, 'Science': 80}
+s = pd.Series(data)
+print(s)
 
-# # Custom Index
-# marks = pd.Series([45, 78, 90], index=['Math', 'English', 'Science'])
-# print("custom indexing  :\n",marks)
-# # Output:
-# '''Math       45
-# English    78
-# Science    90
-# dtype: int64
-# '''
-# # DataFrame — Multiple Columns (Like Excel Table)
-# data = {
-#     'Name': ['Ali', 'Sara', 'Ahmed'],
-#     'Math': [45, 78, 90],
-#     'English': [67, 88, 55]
-# }
+# np operations
+s = pd.Series([10, 20, 30, 40])
 
-# df = pd.DataFrame(data)
-# print("col to dataframe :\n",df)
-# '''Output:
-#     Name  Math  English
-# 0    Ali    45       67
-# 1   Sara    78       88
-# 2  Ahmed    90       55
+print(s + 5)        # adds 5 to all
+print(s * 2)         # multiply all
+print(s[s > 20])     # boolean masking works here too!
+print(s.mean())      # 25.0
+print(s.sum())       # 100
+'''What are Labels?
+Labels are the names given to rows and columns instead of just numbers.
 
-# Series vs DataFrame
-# Series    → ONE column        (like a list with labels)
-# DataFrame → MULTIPLE columns  (like a full table)'''
+Without Labels (Just Numbers)
+import numpy as np
 
-# # Creating DataFrame — Different Ways
+arr = np.array([45, 78, 90])
+print(arr[0])   # 45 ← only number position works
+NumPy arrays only have positions (0,1,2...) — no names.
 
-# # Way 1 - From dictionary
-# data = {
-#     'Name': ['Ali', 'Sara', 'Ahmed'],
-#     'Math': [45, 78, 90],
-#     'English': [67, 88, 55]
-# }
-# df = pd.DataFrame(data)
-# print("way 1 throgh dict:\n",df)
+With Labels (Pandas)
+import pandas as pd
 
-# # Way 2 - From list of lists
-# data2 = [
-#     ['Ali', 45, 67],
-#     ['Sara', 78, 88],
-#     ['Ahmed', 90, 55]
-# ]
-# df2 = pd.DataFrame(data2, columns=['Name', 'Math', 'English'])
-# print("way 2 through list of lists:\n",df2)
+marks = pd.Series([45, 78, 90], index=['Math', 'English', 'Science'])
+print(marks)
+Output:
+Math       45
+English    78
+Science    90
+Now 'Math', 'English', 'Science' are labels — you can use names instead of just numbers.
+print(marks['Math'])    # 45 ← using label
+print(marks[0])         # 45 ← position still works too
 
-# '''What is CSV?
-# CSV = Comma Separated Values
-# It is a simple text file format for storing tabular data (rows and columns).
+Real Life Analogy
+Without labels = phone contacts saved as numbers only
+                  0123456789, 0123456788...
 
-# How It Looks
-# A normal Excel table:
-# Name      Math    English
-# Ali       45      67
-# Sara      78      88
-# Ahmed     90      55
+With labels = phone contacts saved with names
+              "Mom", "Boss", "Friend"
+Much easier to understand with labels.
 
-# Same data as CSV file (.csv):
-# Name,Math,English
-# Ali,45,67
-# Sara,78,88
-# Ahmed,90,55
-# Just commas separating values, one row per line.
+In DataFrame — Two Types of Labels
+df = pd.DataFrame({
+    'Math': [45, 78, 90],
+    'English': [67, 88, 55]
+}, index=['Ali', 'Sara', 'Ahmed'])
 
-# Why CSV is Used:
+print(df)
+Output:
+       Math  English
+Ali      45       67
+Sara     78       88
+Ahmed    90       55
+Column labels → 'Math', 'English'    (top)
+Row labels    → 'Ali', 'Sara', 'Ahmed' (side)'''
 
-# Very small file size
-# Opens in Excel, Notepad, any text editor
-# Easy for programs to read
-# Universal format — works everywhere
-# Most datasets online are in CSV format
+# Custom Index
+marks = pd.Series([45, 78, 90], index=['Math', 'English', 'Science'])
+print("custom indexing  :\n",marks)
+# Output:
+'''Math       45
+English    78
+Science    90
+dtype: int64
+'''
+# DataFrame — Multiple Columns (Like Excel Table)
+data = {
+    'Name': ['Ali', 'Sara', 'Ahmed'],
+    'Math': [45, 78, 90],
+    'English': [67, 88, 55]
+}
 
-# Real Example
-# Open Notepad and type this:
-# Name,Age,City
-# Ali,20,Lahore
-# Sara,22,Karachi
-# Ahmed,21,Islamabad
-# Save as data.csv — that's it. A real CSV file.'''
+df = pd.DataFrame(data)
+print("col to dataframe :\n",df)
+'''Output:
+    Name  Math  English
+0    Ali    45       67
+1   Sara    78       88
+2  Ahmed    90       55
 
-# # Reading CSV in Pandas
-# import pandas as pd
+Series vs DataFrame
+Series    → ONE column        (like a list with labels)
+DataFrame → MULTIPLE columns  (like a full table)'''
 
-# df = pd.read_csv('data.csv')
-# print(df)
-# '''Output:
-#     Name  Age      City
-# 0    Ali   20    Lahore
-# 1   Sara   22  Karachi
-# 2  Ahmed   21  Islamabad
-# Pandas automatically converts CSV into a clean table.
+# Creating DataFrame — Different Ways
 
-# Saving DataFrame to CSV
-# df.to_csv('output.csv', index=False)
-# index=False means don't save the row numbers (0,1,2) into the file.
+# Way 1 - From dictionary
+data = {
+    'Name': ['Ali', 'Sara', 'Ahmed'],
+    'Math': [45, 78, 90],
+    'English': [67, 88, 55]
+}
+df = pd.DataFrame(data)
+print("way 1 throgh dict:\n",df)
 
-# Where You Will Use CSV
-# - Kaggle datasets are mostly CSV
-# - Exporting your analysis results
-# - Sharing data between programs
-# - Database exports
-# - API responses sometimes give CSV
+# Way 2 - From list of lists
+data2 = [
+    ['Ali', 45, 67],
+    ['Sara', 78, 88],
+    ['Ahmed', 90, 55]
+]
+df2 = pd.DataFrame(data2, columns=['Name', 'Math', 'English'])
+print("way 2 through list of lists:\n",df2)
+
+'''What is CSV?
+CSV = Comma Separated Values
+It is a simple text file format for storing tabular data (rows and columns).
+
+How It Looks
+A normal Excel table:
+Name      Math    English
+Ali       45      67
+Sara      78      88
+Ahmed     90      55
+
+Same data as CSV file (.csv):
+Name,Math,English
+Ali,45,67
+Sara,78,88
+Ahmed,90,55
+Just commas separating values, one row per line.
+
+Why CSV is Used:
+
+Very small file size
+Opens in Excel, Notepad, any text editor
+Easy for programs to read
+Universal format — works everywhere
+Most datasets online are in CSV format
+
+Real Example
+Open Notepad and type this:
+Name,Age,City
+Ali,20,Lahore
+Sara,22,Karachi
+Ahmed,21,Islamabad
+Save as data.csv — that's it. A real CSV file.'''
+
+# Reading CSV in Pandas
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+print(df)
+'''Output:
+    Name  Age      City
+0    Ali   20    Lahore
+1   Sara   22  Karachi
+2  Ahmed   21  Islamabad
+Pandas automatically converts CSV into a clean table.
+
+Saving DataFrame to CSV
+df.to_csv('output.csv', index=False)
+index=False means don't save the row numbers (0,1,2) into the file.
+
+Where You Will Use CSV
+- Kaggle datasets are mostly CSV
+- Exporting your analysis results
+- Sharing data between programs
+- Database exports
+- API responses sometimes give CSV
 
 
-# Simple rule:
+Simple rule:
 
-# CSV = plain table data, no styling, universal format.
-
-
-# What is Excel?
-# Excel is spreadsheet software made by Microsoft for 
-# creating and managing tables, calculations, and charts.
-
-# How It Looks
-# ┌─────────┬──────┬──────────┐
-# │  Name   │ Age  │   City   │
-# ├─────────┼──────┼──────────┤
-# │  Ali    │  20  │  Lahore  │
-# │  Sara   │  22  │ Karachi  │
-# │  Ahmed  │  21  │Islamabad │
-# └─────────┴──────┴──────────┘
-# File extension: .xlsx or .xls
-
-# What Makes Excel Special
-# ✅ Colors and formatting
-# ✅ Built-in formulas (SUM, AVERAGE, IF)
-# ✅ Multiple sheets in one file
-# ✅ Charts and graphs
-# ✅ Can have merged cells
-# ✅ Conditional formatting
+CSV = plain table data, no styling, universal format.
 
 
-# Reading Excel in Pandas
-# import pandas as pd
+What is Excel?
+Excel is spreadsheet software made by Microsoft for 
+creating and managing tables, calculations, and charts.
 
-# # Read excel file
-# df = pd.read_excel('students.xlsx')
-# print(df)
+How It Looks
+┌─────────┬──────┬──────────┐
+│  Name   │ Age  │   City   │
+├─────────┼──────┼──────────┤
+│  Ali    │  20  │  Lahore  │
+│  Sara   │  22  │ Karachi  │
+│  Ahmed  │  21  │Islamabad │
+└─────────┴──────┴──────────┘
+File extension: .xlsx or .xls
 
-# # If multiple sheets, specify which one
-# df = pd.read_excel('students.xlsx', sheet_name='Sheet1')
-
-# You Need Extra Library for Excel
-# # pip install openpyxl
-# CSV needs no extra library. Excel does.
-
-# Saving DataFrame to Excel
-# df.to_excel('output.xlsx', index=False)
+What Makes Excel Special
+✅ Colors and formatting
+✅ Built-in formulas (SUM, AVERAGE, IF)
+✅ Multiple sheets in one file
+✅ Charts and graphs
+✅ Can have merged cells
+✅ Conditional formatting
 
 
-# Simple Rule
+Reading Excel in Pandas
+import pandas as pd
 
-# Excel = software with formatting and formulas
+# Read excel file
+df = pd.read_excel('students.xlsx')
+print(df)
 
-# CSV = plain data file that Excel can also open'''
+# If multiple sheets, specify which one
+df = pd.read_excel('students.xlsx', sheet_name='Sheet1')
+
+You Need Extra Library for Excel
+# pip install openpyxl
+CSV needs no extra library. Excel does.
+
+Saving DataFrame to Excel
+df.to_excel('output.xlsx', index=False)
+
+
+Simple Rule
+
+Excel = software with formatting and formulas
+
+CSV = plain data file that Excel can also open'''
 
 
