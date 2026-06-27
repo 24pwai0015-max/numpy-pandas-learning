@@ -99,7 +99,7 @@ import numpy as np
 
 # 1. Load data
 df = pd.read_csv('https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv')
-print("Shape:", df.shape)
+# print("Shape:", df.shape)
 
 # 2. Drop unneeded columns
 df.drop(columns=['PassengerId'], inplace=True)
@@ -129,10 +129,18 @@ df['title'] = df['title'].replace('Mme', 'Mrs')
 
 # 6. Handle missing values
 df['Age'] = df['Age'].fillna(df['Age'].mean())
+def age_category(age):
+    if age>=30:
+        return 'Senior'
+    elif age>=20:
+        return 'junior'
+    else:
+        return 'child'
+df['Age group']=df['Age'].apply(age_category)
 df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
 
 # 7. Verify no missing values remain
-print("\nMissing values:\n", df.isnull().sum())
+# print("\nMissing values:\n", df.isnull().sum())
 
 # 8. Create family size feature
 df['family size'] = df['siblings/spouce'] + df['parents/children'] + 1
@@ -142,5 +150,6 @@ print("\nFinal shape:", df.shape)
 print(df.head(10))
 
 # 10. Save cleaned dataset
-df.to_csv('titanic_cleaned.csv', index=False)
+# df.to_csv('titanic_cleaned.csv', index=False)
+
 
