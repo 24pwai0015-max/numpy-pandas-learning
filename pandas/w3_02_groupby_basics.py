@@ -40,11 +40,6 @@ print(df2)
 # df2['avg']=df2.groupby(['Class','Gender'])['Math'].transform('mean')
 # print(df2)
 
-
-# df3 = pd.read_csv('https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv')
-# print(df3.columns)
-
-
 import pandas as pd
 
 data = {
