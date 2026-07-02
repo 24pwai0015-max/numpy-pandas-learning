@@ -144,11 +144,14 @@ df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
 
 # 8. Create family size feature
 df['family size'] = df['siblings/spouce'] + df['parents/children'] + 1
-
+# survival rate by passenger class
+df['survival Pclass']=df.groupby('Passenger class')['Survived'].transform('mean')
+df['survival age']=df.groupby('Age group')['Survived'].transform('mean')
+df['survival Sex']=df.groupby('Sex')['Survived'].transform('mean')
 # 9. Final check
 print("\nFinal shape:", df.shape)
 print(df.head(10))
-
+# print(df.columns)
 # 10. Save cleaned dataset
 # df.to_csv('titanic_cleaned.csv', index=False)
 
