@@ -40,7 +40,7 @@ print(df2)
 # df2['avg']=df2.groupby(['Class','Gender'])['Math'].transform('mean')
 # print(df2)
 
-import pandas as pd
+# import pandas as pd
 
 data = {
     'Name': ['Ali', 'Sara', 'Ahmed', 'Fatima', 'Hassan', 'Bilal', 'Ayesha'],

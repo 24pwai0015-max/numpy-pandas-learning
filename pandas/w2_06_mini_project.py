@@ -148,10 +148,18 @@ df['family size'] = df['siblings/spouce'] + df['parents/children'] + 1
 df['survival Pclass']=df.groupby('Passenger class')['Survived'].transform('mean')
 df['survival age']=df.groupby('Age group')['Survived'].transform('mean')
 df['survival Sex']=df.groupby('Sex')['Survived'].transform('mean')
+print("passenger class recap")
+print(df.groupby('Passenger class').agg(
+       avg_age    = ('Age', 'mean'),
+       max_fare   = ('Fare', 'max'),
+       survival   = ('Survived', 'mean'),
+       count      = ('Survived', 'count')
+   ))
+print(df)
 # 9. Final check
 print("\nFinal shape:", df.shape)
 print(df.head(10))
-# print(df.columns)
+print(df.columns)
 # 10. Save cleaned dataset
 # df.to_csv('titanic_cleaned.csv', index=False)
 
