@@ -132,13 +132,7 @@ print(pd.crosstab(df['Passenger class'],df['Sex']))
 print(pd.crosstab(df['Passenger class'],df['Sex'],
                   values=df['Survived'],
                   aggfunc='mean'))
-# =====================================================
-# 9. Final check
-# =====================================================
 
-# print("\nFinal shape:", df.shape)
-# print(df.head(10))
-print(df.columns)
 # =====================================================
 # 10. Save cleaned dataset
 # =====================================================
@@ -197,4 +191,11 @@ print(pd.pivot_table(df,
     columns = 'Sex',
     aggfunc = 'mean'
 ) * 100)
-                  
+
+                  # =====================================================
+# 9. Final check
+# =====================================================
+
+print("\nFinal shape:", df.shape)
+# print(df.head(10))
+print(df.columns)
