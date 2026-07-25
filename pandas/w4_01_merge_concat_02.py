@@ -1,78 +1,78 @@
-# '''After joins (combining by matching keys), concat() is simpler — 
-# it just stacks DataFrames together without needing a key column.
+'''After joins (combining by matching keys), concat() is simpler — 
+it just stacks DataFrames together without needing a key column.
 
-# What is concat()?
-# Joins:   combine by matching a KEY column
-# concat:  just STACK tables together — no key needed
+What is concat()?
+Joins:   combine by matching a KEY column
+concat:  just STACK tables together — no key needed
 
-# Two modes:
+Two modes:
 
-# axis=0 → stack vertically (add more rows)
-# axis=1 → stack horizontally (add more columns)'''
-# import pandas as pd
+axis=0 → stack vertically (add more rows)
+axis=1 → stack horizontally (add more columns)'''
+import pandas as pd
 
-# df1 = pd.DataFrame({
-#     'Name':  ['Ali', 'Sara'],
-#     'Math':  [45, 78],
-#     'f_name':['ahmed','aqrar']
-# })
+df1 = pd.DataFrame({
+    'Name':  ['Ali', 'Sara'],
+    'Math':  [45, 78],
+    'f_name':['ahmed','aqrar']
+})
 
-# df2 = pd.DataFrame({
-#     'Name':  ['Ahmed', 'Fatima'],
-#     'Math':  [90, 55],
-# })
+df2 = pd.DataFrame({
+    'Name':  ['Ahmed', 'Fatima'],
+    'Math':  [90, 55],
+})
 
-# df3 = pd.DataFrame({
-#     'Name':  ['Hassan', 'Bilal'],
-#     'Math':  [67, 60],
-# })
-# # # add rows
-# # result=pd.concat([df1,df2],axis=0,)
-# # print(result)
-# # # ignore index
-# # result=pd.concat([df1,df2],axis=0,ignore_index=True)
-# # print(result)
-# # print("+"*50)
-# # # add columns
-# # result1=pd.concat([df1,df2],axis=1)
-# # print(result1)
-# # print("+"*50)
-# # # multile files cncat
-# # result2=pd.concat([df1,df2,df3],axis=0,ignore_index=True)
-# # print(result2)
+df3 = pd.DataFrame({
+    'Name':  ['Hassan', 'Bilal'],
+    'Math':  [67, 60],
+})
+# add rows
+result=pd.concat([df1,df2],axis=0,)
+print(result)
+# ignore index
+result=pd.concat([df1,df2],axis=0,ignore_index=True)
+print(result)
+print("+"*50)
+# add columns
+result1=pd.concat([df1,df2],axis=1)
+print(result1)
+print("+"*50)
+# multile files cncat
+result2=pd.concat([df1,df2,df3],axis=0,ignore_index=True)
+print(result2)
 
-# # # What Happens With Different Columns
-# # df_a = pd.DataFrame({
-# #     'Name': ['Ali', 'Sara'],
-# #     'Math': [45, 78]
-# # })
+# What Happens With Different Columns
+df_a = pd.DataFrame({
+    'Name': ['Ali', 'Sara'],
+    'Math': [45, 78]
+})
 
-# # df_b = pd.DataFrame({
-# #     'Name':    ['Ahmed', 'Fatima'],
-# #     'English': [90, 55]   # different column!
-# # })
+df_b = pd.DataFrame({
+    'Name':    ['Ahmed', 'Fatima'],
+    'English': [90, 55]   # different column!
+})
 
-# # result = pd.concat([df_a, df_b], axis=0, ignore_index=True)
-# # print(result)
-# # print(result.fillna(result.median(numeric_only=True)))
+result = pd.concat([df_a, df_b], axis=0, ignore_index=True)
+print(result)
+print(result.fillna(result.median(numeric_only=True)))
 
-# batches=pd.concat([df1,df2,df3],
-#                   axis=0,
-#                   keys=['batch 1','batch 2','batch 3'])
-# print(batches)
-
-
-# # ////////////////////////////////////////////////////////////////
-# '''just real example'''
-# # jan = pd.read_csv('january.csv')
-# # feb = pd.read_csv('february.csv')
-# # mar = pd.read_csv('march.csv')
-
-# # # Combine all months into one DataFrame
-# # all_data = pd.concat([jan, feb, mar], axis=0, ignore_index=True)
+batches=pd.concat([df1,df2,df3],
+                  axis=0,
+                  keys=['batch 1','batch 2','batch 3'])
+print(batches)
 
 
-# # tasks
+# ////////////////////////////////////////////////////////////////
+'''just real example'''
+# jan = pd.read_csv('january.csv')
+# feb = pd.read_csv('february.csv')
+# mar = pd.read_csv('march.csv')
+
+# # Combine all months into one DataFrame
+# all_data = pd.concat([jan, feb, mar], axis=0, ignore_index=True)
+
+
+# tasks
 
 import pandas as pd
 import numpy as np
