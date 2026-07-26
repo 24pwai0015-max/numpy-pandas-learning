@@ -45,126 +45,126 @@ res=pd.pivot_table(df,
                )
 print(res)
 
-# Sum instead of mean
-print(pd.pivot_table(df,
-    values  = 'Math',
-    index   = 'Class',
-    columns = 'Gender',
-    aggfunc = 'sum'
-))
+# # Sum instead of mean
+# print(pd.pivot_table(df,
+#     values  = 'Math',
+#     index   = 'Class',
+#     columns = 'Gender',
+#     aggfunc = 'sum'
+# ))
 
-# Count
-print(pd.pivot_table(df,
-    values  = 'Math',
-    index   = 'Class',
-    columns = 'Gender',
-    aggfunc = 'count'
-))
+# # Count
+# print(pd.pivot_table(df,
+#     values  = 'Math',
+#     index   = 'Class',
+#     columns = 'Gender',
+#     aggfunc = 'count'
+# ))
 
-# Max
-print(pd.pivot_table(df,
-    values  = 'Math',
-    index   = 'Class',
-    columns = 'Gender',
-    aggfunc = 'max'
-))
+# # Max
+# print(pd.pivot_table(df,
+#     values  = 'Math',
+#     index   = 'Class',
+#     columns = 'Gender',
+#     aggfunc = 'max'
+# ))
 
-res=pd.pivot_table(df,
-               values=['Math','English'],
-               index='Class',
-               columns='Gender',
-               aggfunc='mean',
-               margins='True'
-               )
-print(res)
-
-
-print(pd.pivot_table(df,
-    values    = 'Math',
-    index     = 'Class',
-    columns   = ['Gender','result'],
-    aggfunc   = 'mean',
-    fill_value = 10# ← replace NaN with 0
-))
+# res=pd.pivot_table(df,
+#                values=['Math','English'],
+#                index='Class',
+#                columns='Gender',
+#                aggfunc='mean',
+#                margins='True'
+#                )
+# print(res)
 
 
-# tasks
-import pandas as pd
+# print(pd.pivot_table(df,
+#     values    = 'Math',
+#     index     = 'Class',
+#     columns   = ['Gender','result'],
+#     aggfunc   = 'mean',
+#     fill_value = 10# ← replace NaN with 0
+# ))
 
-data = {
-    'Name':    ['Ali', 'Sara', 'Ahmed', 'Fatima', 'Hassan', 'Bilal', 'Ayesha'],
-    'Class':   ['A', 'B', 'A', 'B', 'A', 'B', 'A'],
-    'Gender':  ['M', 'F', 'M', 'F', 'M', 'M', 'F'],
-    'Math':    [45, 78, 90, 55, 67, 60, 85],
-    'English': [67, 88, 55, 70, 60, 72, 90]
-}
-df = pd.DataFrame(data)
 
-# 1. Pivot table: average Math score, rows=Class, columns=Gender
-res=pd.pivot_table(df,
-               values='Math',
-               index='Class',
-               columns='Gender',
-               aggfunc='mean'
-               )
-print(res)
-# 2. Pivot table: total (sum) English score, rows=Class, columns=Gender
-print("task 2:\n",pd.pivot_table(df,
-               values='English',
-               index='Class',
-               columns='Gender',
-               aggfunc='sum'
-               ))
-# 3. Pivot table: count of students, rows=Class, columns=Gender
-print("task 3:\n",pd.pivot_table(df,
-               values='Name',
-               index='Class',
-               columns='Gender',
-               aggfunc='count'
-               ))
-# 4. Pivot table: average Math AND English, rows=Class, columns=Gender
-res=pd.pivot_table(df,
-               values=['Math','English'],
-               index='Class',
-               columns='Gender',
-               aggfunc='mean',
+# # tasks
+# import pandas as pd
+
+# data = {
+#     'Name':    ['Ali', 'Sara', 'Ahmed', 'Fatima', 'Hassan', 'Bilal', 'Ayesha'],
+#     'Class':   ['A', 'B', 'A', 'B', 'A', 'B', 'A'],
+#     'Gender':  ['M', 'F', 'M', 'F', 'M', 'M', 'F'],
+#     'Math':    [45, 78, 90, 55, 67, 60, 85],
+#     'English': [67, 88, 55, 70, 60, 72, 90]
+# }
+# df = pd.DataFrame(data)
+
+# # 1. Pivot table: average Math score, rows=Class, columns=Gender
+# res=pd.pivot_table(df,
+#                values='Math',
+#                index='Class',
+#                columns='Gender',
+#                aggfunc='mean'
+#                )
+# print(res)
+# # 2. Pivot table: total (sum) English score, rows=Class, columns=Gender
+# print("task 2:\n",pd.pivot_table(df,
+#                values='English',
+#                index='Class',
+#                columns='Gender',
+#                aggfunc='sum'
+#                ))
+# # 3. Pivot table: count of students, rows=Class, columns=Gender
+# print("task 3:\n",pd.pivot_table(df,
+#                values='Name',
+#                index='Class',
+#                columns='Gender',
+#                aggfunc='count'
+#                ))
+# # 4. Pivot table: average Math AND English, rows=Class, columns=Gender
+# res=pd.pivot_table(df,
+#                values=['Math','English'],
+#                index='Class',
+#                columns='Gender',
+#                aggfunc='mean',
                
-               )
-print(res)
-# 5. Pivot table: max Math score, rows=Class, columns=Gender, add margins=True
-# Max
-print(pd.pivot_table(df,
-    values  = 'Math',
-    index   = 'Class',
-    columns = 'Gender',
-    aggfunc = 'max',
-    margins='True'
-))
+#                )
+# print(res)
+# # 5. Pivot table: max Math score, rows=Class, columns=Gender, add margins=True
+# # Max
+# print(pd.pivot_table(df,
+#     values  = 'Math',
+#     index   = 'Class',
+#     columns = 'Gender',
+#     aggfunc = 'max',
+#     margins='True'
+# ))
 
-# 6. Pivot table: average Math, rows=Class, columns=Gender, fill_value=0
-print(pd.pivot_table(df,
-    values    = 'Math',
-    index     = 'Class',
-    columns   ='Gender',
-    aggfunc   = 'mean',
-    fill_value = 0
-))
-# 7. BONUS: Load Titanic and create:
-#    - Survival rate by Passenger class (index) and Sex (columns)
-#    - Average Fare by Passenger class (index) and Embarked (columns)
-# resp=pd.pivot_table(df,
-#                    values='Age',
-#                    index='Passenger class',
-#                    columns='Sex',
-#                    aggfunc='mean',
-#                    fill_value=0,
-#                    )
-# print(resp)
-# rese=pd.pivot_table(df,
-#                    values='Fare',
-#                    index='Passenger class',
-#                    columns='Embarked',
-#                    aggfunc='mean',
-#                    fill_value=0,
-#                    )
-# print(rese)
+# # 6. Pivot table: average Math, rows=Class, columns=Gender, fill_value=0
+# print(pd.pivot_table(df,
+#     values    = 'Math',
+#     index     = 'Class',
+#     columns   ='Gender',
+#     aggfunc   = 'mean',
+#     fill_value = 0
+# ))
+# # 7. BONUS: Load Titanic and create:
+# #    - Survival rate by Passenger class (index) and Sex (columns)
+# #    - Average Fare by Passenger class (index) and Embarked (columns)
+# # resp=pd.pivot_table(df,
+# #                    values='Age',
+# #                    index='Passenger class',
+# #                    columns='Sex',
+# #                    aggfunc='mean',
+# #                    fill_value=0,
+# #                    )
+# # print(resp)
+# # rese=pd.pivot_table(df,
+# #                    values='Fare',
+# #                    index='Passenger class',
+# #                    columns='Embarked',
+# #                    aggfunc='mean',
+# #                    fill_value=0,
+# #                    )
+# # print(rese)
