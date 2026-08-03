@@ -1,132 +1,273 @@
-'''clean version'''
+# =====================================================
+# MONTH 1 FINAL PROJECT — Titanic EDA
+# Arsalan | Week 4 Sunday
+# =====================================================
 
 import pandas as pd
 import numpy as np
 
 # =====================================================
-# 1. Load data
+# SECTION 1: Load & Inspect
 # =====================================================
 
 df = pd.read_csv(
-    'https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv'
+    "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
 )
 
+print("=" * 50)
+print("Dataset Shape")
+print(df.shape)
+
+print("\nColumns")
+print(df.columns)
+
+print("\nData Types")
+print(df.dtypes)
+
+print("\nMissing Values")
+print(df.isnull().sum())
+
+print("\nDuplicate Rows:", df.duplicated().sum())
+
+print("\nSummary Statistics")
+print(df.describe(include="all"))
+
 # =====================================================
-# 2. Drop unneeded columns
+# SECTION 2: Data Cleaning
 # =====================================================
 
-df.drop(columns=['PassengerId'], inplace=True)
-df.drop(columns=['Cabin'], inplace=True)
-
-# =====================================================
-# 3. Rename columns for clarity
-# =====================================================
+df.drop(columns=["PassengerId", "Cabin"], inplace=True)
 
 df.rename(columns={
-    'Pclass': 'Passenger class',
-    'SibSp': 'siblings/spouce',
-    'Parch': 'parents/children'
+    "Pclass": "Passenger Class",
+    "SibSp": "Siblings/Spouse",
+    "Parch": "Parents/Children"
 }, inplace=True)
 
+df["Name"] = df["Name"].str.strip()
+df["Sex"] = df["Sex"].str.strip()
+
+df["Age"].fillna(df["Age"].median(), inplace=True)
+df["Embarked"].fillna(df["Embarked"].mode()[0], inplace=True)
+
+df.drop_duplicates(inplace=True)
+
+print("\nRemaining Missing Values")
+print(df.isnull().sum())
+
 # =====================================================
-# 4. Clean text columns
+# SECTION 3: Feature Engineering
 # =====================================================
 
-df['Name'] = df['Name'].str.strip()
-df['Sex'] = df['Sex'].str.strip()
+# -------- Title --------
 
-# =====================================================
-# 5. Feature engineering — Extract title
-# =====================================================
+df["Title"] = df["Name"].str.extract(r",\s*([^.]*)\.")
 
-df['title'] = df['Name'].str.extract(r',\s*([^\.]*)\.')
-
-# Group rare titles together
-df['title'] = df['title'].replace(
-    ['Dr', 'Rev', 'Col', 'Major', 'Capt',
-     'Jonkheer', 'Don', 'Sir', 'Countess', 'Lady'],
-    'Rare'
+df["Title"] = df["Title"].replace(
+    ["Capt", "Col", "Don", "Dr", "Jonkheer",
+     "Lady", "Major", "Rev", "Sir", "Countess"],
+    "Rare"
 )
 
-df['title'] = df['title'].replace(['Mlle', 'Ms'], 'Miss')
-df['title'] = df['title'].replace('Mme', 'Mrs')
+df["Title"] = df["Title"].replace(["Mlle", "Ms"], "Miss")
+df["Title"] = df["Title"].replace("Mme", "Mrs")
 
-# =====================================================
-# 6. Handle missing values
-# =====================================================
+# -------- Age Category --------
 
-df['Age'] = df['Age'].fillna(df['Age'].mean())
+df["Age Category"] = pd.cut(
+    df["Age"],
+    bins=[0, 12, 19, 59, 100],
+    labels=["Child", "Teen", "Adult", "Senior"],
+    include_lowest=True
+)
 
-def age_category(age):
-    if age >= 30:
-        return 'Senior'
-    elif age >= 20:
-        return 'junior'
+# -------- Family Size --------
+
+df["Family Size"] = (
+    df["Siblings/Spouse"]
+    + df["Parents/Children"]
+    + 1
+)
+
+# -------- Is Alone --------
+
+df["Is Alone"] = np.where(df["Family Size"] == 1, "Yes", "No")
+
+# -------- Family Group --------
+
+def family_group(size):
+    if size == 1:
+        return "Solo"
+    elif size <= 4:
+        return "Small Family"
     else:
-        return 'child'
+        return "Large Family"
 
-df['Age group'] = df['Age'].apply(age_category)
+df["Family Group"] = df["Family Size"].apply(family_group)
 
-df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
+# -------- Fare Category --------
 
-# =====================================================
-# 7. Create family size feature
-# =====================================================
-
-df['family size'] = (
-    df['siblings/spouce'] +
-    df['parents/children'] +
-    1
+df["Fare Category"] = pd.qcut(
+    df["Fare"],
+    q=4,
+    labels=["Low", "Medium", "High", "Very High"]
 )
 
 # =====================================================
-# 8. Pivot tables
+# SECTION 4: Business Questions
 # =====================================================
 
-resp = pd.pivot_table(
+print("\n" + "=" * 60)
+print("Q1. Overall Survival Rate")
+print("=" * 60)
+
+print(f"{df['Survived'].mean()*100:.2f}%")
+
+# -----------------------------------------------------
+
+print("\n" + "=" * 60)
+print("Q2. Survival Rate by Passenger Class")
+print("=" * 60)
+
+print(
+    df.groupby("Passenger Class")["Survived"]
+      .mean()
+      .sort_values(ascending=False)
+)
+
+# -----------------------------------------------------
+
+print("\n" + "=" * 60)
+print("Q3. Gender Effect on Survival")
+print("=" * 60)
+
+print("\nCounts")
+print(pd.crosstab(df["Sex"], df["Survived"]))
+
+print("\nRates")
+print(
+    pd.crosstab(
+        df["Sex"],
+        df["Survived"],
+        normalize="index"
+    ) * 100
+)
+
+# -----------------------------------------------------
+
+print("\n" + "=" * 60)
+print("Q4. Age Category vs Survival")
+print("=" * 60)
+
+print(
+    df.groupby("Age Category")["Survived"]
+      .mean()
+      .sort_values(ascending=False)
+)
+
+# -----------------------------------------------------
+
+print("\n" + "=" * 60)
+print("Q5. Family Group vs Survival")
+print("=" * 60)
+
+print(
+    df.groupby("Family Group")["Survived"]
+      .mean()
+)
+
+# -----------------------------------------------------
+
+print("\n" + "=" * 60)
+print("Q6. Title with Highest Survival")
+print("=" * 60)
+
+print(
+    df.groupby("Title")["Survived"]
+      .mean()
+      .sort_values(ascending=False)
+)
+
+# -----------------------------------------------------
+
+print("\n" + "=" * 60)
+print("Q7. Passenger Class + Gender Survival")
+print("=" * 60)
+
+pivot = pd.pivot_table(
     df,
-    values='Age',
-    index='Passenger class',
-    columns='Sex',
-    aggfunc='mean',
-    fill_value=0,
+    values="Survived",
+    index="Passenger Class",
+    columns="Sex",
+    aggfunc="mean"
 )
 
-print(resp)
+print(pivot)
 
-rese = pd.pivot_table(
-    df,
-    values='Fare',
-    index='Passenger class',
-    columns='Embarked',
-    aggfunc='mean',
-    fill_value=0,
+# -----------------------------------------------------
+
+print("\n" + "=" * 60)
+print("Q8. Fare Distribution by Passenger Class")
+print("=" * 60)
+
+print(
+    df.groupby("Passenger Class")["Fare"]
+      .agg(
+          Mean="mean",
+          Min="min",
+          Max="max",
+          Count="count"
+      )
 )
 
-print(rese)
 # =====================================================
-# 9. value counts and cross tab:
-# =====================================================
-# BONUS: Load Titanic and:
-# 10. value_counts() on Pclass, Sex, Embarked columns
-print(df['Passenger class'].value_counts())
-print(df['Sex'].value_counts())
-print(df['Embarked'].value_counts())
-# 11. crosstab of Pclass vs Sex (raw counts)
-print(pd.crosstab(df['Passenger class'],df['Sex']))
-# 12. crosstab of Pclass vs Sex showing survival RATE (values=Survived, aggfunc='mean')
-print(pd.crosstab(df['Passenger class'],df['Sex'],
-                  values=df['Survived'],
-                  aggfunc='mean'))
-# =====================================================
-# 9. Final check
+# Extra Analysis
 # =====================================================
 
-# print("\nFinal shape:", df.shape)
-# print(df.head(10))
-print(df.columns)
-# =====================================================
-# 10. Save cleaned dataset
-# =====================================================
-# df.to_csv('titanic_cleaned.csv', index=False)
+print("\nPassenger Class Counts")
+print(df["Passenger Class"].value_counts())
 
+print("\nGender Counts")
+print(df["Sex"].value_counts())
+
+print("\nEmbarked Counts")
+print(df["Embarked"].value_counts())
+
+print("\nPassenger Class vs Gender")
+print(pd.crosstab(df["Passenger Class"], df["Sex"]))
+
+print("\nPassenger Class vs Gender Survival Rate")
+print(
+    pd.crosstab(
+        df["Passenger Class"],
+        df["Sex"],
+        values=df["Survived"],
+        aggfunc="mean"
+    )
+)
+
+# =====================================================
+# SECTION 5: Key Findings Summary
+# =====================================================
+
+"""
+Key Findings
+
+1. Female passengers had a much higher survival rate than males.
+2. First-class passengers had the highest survival rate.
+3. Children generally survived more often than seniors.
+4. Small families survived more often than large families.
+5. Passengers with higher ticket fares generally had better survival chances.
+6. Titles such as Mrs and Miss showed higher survival rates.
+7. First-class females had the highest survival probability.
+8. Third-class males had the lowest survival probability.
+"""
+
+# =====================================================
+# SECTION 6: Save
+# =====================================================
+
+df.to_csv("titanic_cleaned.csv", index=False)
+
+print("\nCleaned dataset saved successfully!")
+print("Final Shape:", df.shape)
