@@ -1,2 +1,2 @@
 # numpy-pandas-learning
-Learning NumPy, Pandas and building towards AI Agent Automation Development
+Learning NumPy, Pandas,matplotlib-seaborn and building towards AI Agent Automation Development
