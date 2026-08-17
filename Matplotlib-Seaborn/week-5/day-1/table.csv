@@ -1,0 +1,8 @@
+Code,Effect
+plt.axis('equal'),Makes axes equal → perfect circle
+plt.axis('scaled'),Similar to equal + adjusts limits
+plt.axis('off'),Hides the axes completely
+plt.axis('on'),Shows the axes
+"plt.axis([xmin, xmax, ymin, ymax])",Sets custom axis limits
+plt.axis('tight'),Fits the axes tightly around the data
+plt.axis('square'),Makes the plot area square
