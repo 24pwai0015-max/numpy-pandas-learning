@@ -27,7 +27,7 @@ plt.plot(months, sales, color="#6E0808", marker='o', markersize=5)
 plt.xlabel('Months')
 plt.ylabel('Sales $')
 plt.ylim(0, 3000)
-plt.annotate('Peak of Month',
+plt.annotate('Peak!',
              fontsize=12, fontweight='bold',
              xy=('Jun', 2200),
              xytext=('Mar', 2500),
@@ -82,14 +82,14 @@ plt.show()
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-axes[0].set_title('Monthly Sales', fontsize=16, fontweight='bold', color='#000000')
+axes[0].set_title('Monthly Sales', fontsize=16, fontweight='bold')
 axes[0].plot(months, sales, color="#000000", marker="o", markersize=5)
 axes[0].set_xlabel('Months')
 axes[0].set_ylabel('Sales $')
 axes[0].set_ylim(0, 2500)
 axes[0].grid(True, alpha=0.5)
 
-axes[1].set_title('Subject Scores', fontsize=16, fontweight='bold', color='#000000')
+axes[1].set_title('Subject Scores', fontsize=16, fontweight='bold')
 axes[1].bar(subjects, scores, color="#224C8A")
 axes[1].set_xlabel('Subjects')
 axes[1].set_ylabel('Score')
@@ -100,8 +100,6 @@ plt.show()
 
 # =====================================================
 # TASK 4 — METHOD 2: plt.subplots() — 2x2 Dashboard
-# Top left: line | Top right: bar
-# Bottom left: scatter | Bottom right: histogram
 # =====================================================
 
 fig, axes = plt.subplots(2, 2, figsize=(16, 10))
@@ -147,8 +145,7 @@ plt.show()
 
 # =====================================================
 # TASK 5 — sharex=True
-# 2 rows, 1 col — top: line chart, bottom: bar chart
-# Both share the same months x axis
+# 2 rows, 1 col — same months x axis shared
 # =====================================================
 
 fig, axes = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
@@ -175,13 +172,15 @@ plt.show()
 titanic = pd.read_csv(
     'https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv'
 )
-titanic['Age'].fillna(titanic['Age'].median(), inplace=True)
+
+# Fixed fillna — new pandas style
+titanic['Age'] = titanic['Age'].fillna(titanic['Age'].median())
 titanic.rename(columns={'Pclass': 'Passenger class'}, inplace=True)
 
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
 # Top left — survival count
-survival_counts = titanic['Survived'].value_counts()
+survival_counts = titanic['Survived'].value_counts().sort_index()
 axes[0, 0].bar(['Did not Survive', 'Survived'],
                survival_counts.values,
                color=['#E74C3C', '#2ECC71'])
