@@ -1,5 +1,7 @@
-venv/
-pandas/venv/
+*venv*/
+**/venv/
 __pycache__/
 *.pyc
 .env
+data.csv
+data.xlsx
