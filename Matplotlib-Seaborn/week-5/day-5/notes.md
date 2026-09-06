@@ -1,4 +1,4 @@
-# 📊 Week 5 Day 6 — Pandas + Matplotlib & Seaborn Integration
+# 📊 Week 5 Day 5 — Pandas + Matplotlib & Seaborn Integration
 
 > **Core Objective:** Master the end-to-end data science bridge: transform raw data with Pandas aggregations (`groupby`, `pivot_table`, `value_counts`, `.agg()`) and render production-grade visualizations directly with Matplotlib and Seaborn.
 
@@ -191,7 +191,7 @@ plt.show()
 
 ---
 
-## 🎯 Day 6 Key Takeaways
+## 🎯 Day 5 Key Takeaways
 
 1. **Pandas does the heavy lifting:** Aggregate, clean, and reshape with Pandas before calling plotting functions.
 2. **Choose the right tool:**

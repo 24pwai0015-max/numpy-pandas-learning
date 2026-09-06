@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from pathlib import Path
+
 # ------------------------------------------------------------------------------
 # 0. DATA LOADING & PREPARATION
 # ------------------------------------------------------------------------------
@@ -10,7 +12,11 @@ try:
         'https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv'
     )
 except Exception:
-    titanic = pd.read_csv('titanic_cleaned.csv')
+    local_csv = Path(__file__).resolve().parents[3] / 'titanic_cleaned.csv'
+    if local_csv.exists():
+        titanic = pd.read_csv(local_csv)
+    else:
+        titanic = pd.read_csv('titanic_cleaned.csv')
 
 # Continuous numerical imputation using median
 titanic['Age'] = titanic['Age'].fillna(titanic['Age'].median())

@@ -1,4 +1,4 @@
-# ⚡ Week 5 Day 6 — Pandas + Matplotlib Quick Reference
+# ⚡ Week 5 Day 5 — Pandas + Matplotlib Quick Reference
 
 A fast, copy-pasteable reference guide for integrating Pandas data manipulation with Matplotlib and Seaborn visualization.
 
